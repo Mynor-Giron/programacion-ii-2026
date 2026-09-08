@@ -1,0 +1,37 @@
+# Control de Compras
+
+## Nombre del proyecto
+Control de Compras
+
+## Descripción
+## Colecciones utilizadas
+
+- **ArrayList:** Se utiliza para almacenar los productos registrados.
+- **HashSet:** Se utiliza para almacenar las categorías evitando que se repitan.
+- **HashMap:** Se utiliza para relacionar cada categoría con el total gastado.
+
+## Funciones principales
+
+- Registrar productos.
+- Registrar categoría, precio y cantidad.
+- Validar los datos ingresados.
+- Calcular el subtotal de cada producto.
+- Calcular el total general.
+- Mostrar las categorías sin repetir.
+- Calcular el total gastado por categoría.
+- Identificar el producto con mayor gasto.
+- Identificar el producto con menor gasto.
+- Identificar la categoría con mayor gasto.
+- Consultar el total de una categoría.
+
+## Estructura del proyecto
+
+```text
+ControlDeCompras
+│
+├── src
+│   ├── Producto.java
+│   └── MainControlCompras.java
+│
+├── README.md
+└── .gitignore
