@@ -36,4 +36,3 @@ ni operaciones POST/PUT/DELETE).
 ---
 
 ## 📁 Estructura
-
