@@ -3,11 +3,14 @@ package com.tuuniversidad.pedidos.controller;
 import com.tuuniversidad.pedidos.dto.PedidoRequestDTO;
 import com.tuuniversidad.pedidos.dto.PedidoResponseDTO;
 import com.tuuniversidad.pedidos.service.PedidoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -23,7 +26,31 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<PedidoResponseDTO> registrar(@RequestBody PedidoRequestDTO dto) {
+    public ResponseEntity<PedidoResponseDTO> registrar(@Valid @RequestBody PedidoRequestDTO dto) {
         return new ResponseEntity<>(service.registrar(dto), HttpStatus.CREATED);
+    }
+
+    // Endpoint para el filtro por estado
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<PedidoResponseDTO>> porEstado(@PathVariable String estado) {
+        return ResponseEntity.ok(service.buscarPorEstado(estado.toUpperCase()));
+    }
+
+    // Endpoint para el filtro por zona
+    @GetMapping("/zona/{zonaId}")
+    public ResponseEntity<List<PedidoResponseDTO>> porZona(@PathVariable Long zonaId) {
+        return ResponseEntity.ok(service.buscarPorZona(zonaId));
+    }
+
+    // Endpoint para entregas pendientes
+    @GetMapping("/pendientes")
+    public ResponseEntity<List<PedidoResponseDTO>> pendientes() {
+        return ResponseEntity.ok(service.entregasPendientes());
+    }
+
+    // Endpoint para el total facturado por fecha (formato: YYYY-MM-DD)
+    @GetMapping("/facturado/{fecha}")
+    public ResponseEntity<Double> facturadoPorFecha(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        return ResponseEntity.ok(service.totalFacturado(fecha));
     }
 }

@@ -9,15 +9,18 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String cliente;
     private String direccion;
     private LocalDateTime fechaPedido = LocalDateTime.now();
-    private Double total;
-    private String estado = "PENDIENTE";
+    private Double totalPedido;
+    private Double costoEnvio;
+    private Double totalFinal;
+    private String estado = "RECIBIDO";
 
     @ManyToOne
-    @JoinColumn(name = "repartidor_id")
-    private Repartidor repartidor;
+    @JoinColumn(name = "zona_entrega_id")
+    private ZonaEntrega zonaEntrega;
 
     public Pedido() {}
 
@@ -29,10 +32,14 @@ public class Pedido {
     public void setDireccion(String direccion) { this.direccion = direccion; }
     public LocalDateTime getFechaPedido() { return fechaPedido; }
     public void setFechaPedido(LocalDateTime fechaPedido) { this.fechaPedido = fechaPedido; }
-    public Double getTotal() { return total; }
-    public void setTotal(Double total) { this.total = total; }
+    public Double getTotalPedido() { return totalPedido; }
+    public void setTotalPedido(Double totalPedido) { this.totalPedido = totalPedido; }
+    public Double getCostoEnvio() { return costoEnvio; }
+    public void setCostoEnvio(Double costoEnvio) { this.costoEnvio = costoEnvio; }
+    public Double getTotalFinal() { return totalFinal; }
+    public void setTotalFinal(Double totalFinal) { this.totalFinal = totalFinal; }
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
-    public Repartidor getRepartidor() { return repartidor; }
-    public void setRepartidor(Repartidor repartidor) { this.repartidor = repartidor; }
+    public ZonaEntrega getZonaEntrega() { return zonaEntrega; }
+    public void setZonaEntrega(ZonaEntrega zonaEntrega) { this.zonaEntrega = zonaEntrega; }
 }

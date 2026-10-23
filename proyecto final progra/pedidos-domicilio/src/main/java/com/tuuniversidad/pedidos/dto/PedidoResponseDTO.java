@@ -7,25 +7,29 @@ public class PedidoResponseDTO {
     private String cliente;
     private String direccion;
     private LocalDateTime fechaPedido;
-    private Double total;
+    private Double totalPedido;
+    private Double costoEnvio;
+    private Double totalFinal;
     private String estado;
-    private String nombreRepartidor;
+    private String nombreZona;
 
-    public PedidoResponseDTO(Long id, String cliente, String direccion, LocalDateTime fechaPedido, Double total, String estado, String nombreRepartidor) {
-        this.id = id;
-        this.cliente = cliente;
-        this.direccion = direccion;
-        this.fechaPedido = fechaPedido;
-        this.total = total;
-        this.estado = estado;
-        this.nombreRepartidor = nombreRepartidor;
-    }
-
+    // Getters y Setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public String getCliente() { return cliente; }
+    public void setCliente(String cliente) { this.cliente = cliente; }
     public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
     public LocalDateTime getFechaPedido() { return fechaPedido; }
-    public Double getTotal() { return total; }
+    public void setFechaPedido(LocalDateTime fechaPedido) { this.fechaPedido = fechaPedido; }
+    public Double getTotalPedido() { return totalPedido; }
+    public void setTotalPedido(Double totalPedido) { this.totalPedido = totalPedido; }
+    public Double getCostoEnvio() { return costoEnvio; }
+    public void setCostoEnvio(Double costoEnvio) { this.costoEnvio = costoEnvio; }
+    public Double getTotalFinal() { return totalFinal; }
+    public void setTotalFinal(Double totalFinal) { this.totalFinal = totalFinal; }
     public String getEstado() { return estado; }
-    public String getNombreRepartidor() { return nombreRepartidor; }
+    public void setEstado(String estado) { this.estado = estado; }
+    public String getNombreZona() { return nombreZona; }
+    public void setNombreZona(String nombreZona) { this.nombreZona = nombreZona; }
 }

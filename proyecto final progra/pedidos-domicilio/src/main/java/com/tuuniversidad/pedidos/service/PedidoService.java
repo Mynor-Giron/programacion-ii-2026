@@ -3,13 +3,14 @@ package com.tuuniversidad.pedidos.service;
 import com.tuuniversidad.pedidos.dto.PedidoRequestDTO;
 import com.tuuniversidad.pedidos.dto.PedidoResponseDTO;
 import com.tuuniversidad.pedidos.entity.Pedido;
-import com.tuuniversidad.pedidos.entity.Repartidor;
+import com.tuuniversidad.pedidos.entity.ZonaEntrega;
 import com.tuuniversidad.pedidos.exception.ResourceNotFoundException;
 import com.tuuniversidad.pedidos.repository.PedidoRepository;
-import com.tuuniversidad.pedidos.repository.RepartidorRepository;
+import com.tuuniversidad.pedidos.repository.zonaEntregaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,14 +18,20 @@ import java.util.stream.Collectors;
 public class PedidoService {
 
     @Autowired private PedidoRepository pedidoRepo;
-    @Autowired private RepartidorRepository repartidorRepo;
+    @Autowired private zonaEntregaRepository zonaRepo;
 
     private PedidoResponseDTO mapToDTO(Pedido p) {
-        String nombreRepartidor = (p.getRepartidor() != null) ? p.getRepartidor().getNombre() : "Sin asignar";
-        return new PedidoResponseDTO(
-                p.getId(), p.getCliente(), p.getDireccion(), p.getFechaPedido(),
-                p.getTotal(), p.getEstado(), nombreRepartidor
-        );
+        PedidoResponseDTO dto = new PedidoResponseDTO();
+        dto.setId(p.getId());
+        dto.setCliente(p.getCliente());
+        dto.setDireccion(p.getDireccion());
+        dto.setFechaPedido(p.getFechaPedido());
+        dto.setTotalPedido(p.getTotalPedido());
+        dto.setCostoEnvio(p.getCostoEnvio());
+        dto.setTotalFinal(p.getTotalFinal());
+        dto.setEstado(p.getEstado());
+        dto.setNombreZona(p.getZonaEntrega() != null ? p.getZonaEntrega().getNombre() : "Sin zona");
+        return dto;
     }
 
     public List<PedidoResponseDTO> listarTodos() {
@@ -32,26 +39,37 @@ public class PedidoService {
     }
 
     public PedidoResponseDTO registrar(PedidoRequestDTO dto) {
-        if (dto.getTotal() == null || dto.getTotal() <= 0) {
-            throw new RuntimeException("El total debe ser mayor a 0");
-        }
-
-        Repartidor repartidor = repartidorRepo.findById(dto.getRepartidorId())
-                .orElseThrow(() -> new ResourceNotFoundException("Repartidor no encontrado"));
-
-        if (!repartidor.getDisponible()) {
-            throw new RuntimeException("El repartidor no está disponible actualmente");
-        }
+        ZonaEntrega zona = zonaRepo.findById(dto.getZonaEntregaId())
+                .orElseThrow(() -> new ResourceNotFoundException("Zona no encontrada"));
 
         Pedido pedido = new Pedido();
         pedido.setCliente(dto.getCliente());
         pedido.setDireccion(dto.getDireccion());
-        pedido.setTotal(dto.getTotal());
-        pedido.setRepartidor(repartidor);
+        pedido.setTotalPedido(dto.getTotalPedido());
+        pedido.setZonaEntrega(zona);
 
-        repartidor.setDisponible(false);
-        repartidorRepo.save(repartidor);
+        // REGLA DE NEGOCIO: Calcular costo de envío y total final
+        pedido.setCostoEnvio(zona.getCosto());
+        pedido.setTotalFinal(dto.getTotalPedido() + zona.getCosto());
+        pedido.setEstado("RECIBIDO");
 
         return mapToDTO(pedidoRepo.save(pedido));
+    }
+
+    public List<PedidoResponseDTO> buscarPorEstado(String estado) {
+        return pedidoRepo.findByEstado(estado).stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
+
+    public List<PedidoResponseDTO> buscarPorZona(Long zonaId) {
+        return pedidoRepo.findByZonaEntregaId(zonaId).stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
+
+    public List<PedidoResponseDTO> entregasPendientes() {
+        return pedidoRepo.findEntregasPendientes().stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
+
+    public Double totalFacturado(LocalDate fecha) {
+        Double total = pedidoRepo.sumarTotalPorFecha(fecha);
+        return total != null ? total : 0.0;
     }
 }

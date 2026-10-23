@@ -1,9 +1,9 @@
 package com.tuuniversidad.pedidos.repository;
 
-import com.tuuniversidad.pedidos.entity.Repartidor;
+import com.tuuniversidad.pedidos.entity.ZonaEntrega;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RepartidorRepository extends JpaRepository<Repartidor, Long> {
+public interface zonaEntregaRepository extends JpaRepository<ZonaEntrega, Long> {
 }
