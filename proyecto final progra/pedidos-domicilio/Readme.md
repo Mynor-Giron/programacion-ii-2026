@@ -1,6 +1,6 @@
 # PF-14 - Pedidos de Entrega a Domicilio
 
-**Nombre:** Mynor Adolfo Girón Muralles
+**Nombre:** Mynor Adolfo GIrón Muralles
 **Carné:** 9941-25-8300
 **Curso:** Programación II
 
@@ -20,14 +20,11 @@ El sistema permite administrar los pedidos de entrega a domicilio. Calcula autom
 - **Pedido:** id, cliente, direccion, fechaPedido, totalPedido, costoEnvio, totalFinal, estado, zonaEntrega.
 - **Relación:** Muchos pedidos pertenecen a una Zona de Entrega (`@ManyToOne`).
 
-## Reglas de Negocio Implementadas
-1. Los montos (total_pedido, costo_envio) deben ser mayores o iguales a cero.
-2. El sistema calcula el `totalFinal` automáticamente sumando el valor del pedido más el costo de la zona.
-3. Los estados manejados son: RECIBIDO, EN_RUTA, ENTREGADO, CANCELADO.
-
-## Endpoints de la API
+## Endpoints de la API (CRUD y Consultas)
 - `GET /api/pedidos` (Consulta general)
 - `POST /api/pedidos` (Registrar pedido y calcular total final)
+- `PUT /api/pedidos/{id}` (Modificar pedido)
+- `DELETE /api/pedidos/{id}` (Eliminar pedido)
 - `GET /api/pedidos/zona/{id}` (Filtro por zona)
 - `GET /api/pedidos/estado/{estado}` (Filtro por estado)
 - `GET /api/pedidos/pendientes` (Entregas pendientes)
