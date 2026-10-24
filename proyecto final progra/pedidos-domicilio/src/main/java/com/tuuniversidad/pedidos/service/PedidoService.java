@@ -72,4 +72,29 @@ public class PedidoService {
         Double total = pedidoRepo.sumarTotalPorFecha(fecha);
         return total != null ? total : 0.0;
     }
+
+    public PedidoResponseDTO modificar(Long id, PedidoRequestDTO dto) {
+        Pedido pedido = pedidoRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado con ID: " + id));
+
+        ZonaEntrega zona = zonaRepo.findById(dto.getZonaEntregaId())
+                .orElseThrow(() -> new ResourceNotFoundException("Zona no encontrada"));
+
+        pedido.setCliente(dto.getCliente());
+        pedido.setDireccion(dto.getDireccion());
+        pedido.setTotalPedido(dto.getTotalPedido());
+        pedido.setZonaEntrega(zona);
+
+
+        pedido.setCostoEnvio(zona.getCosto());
+        pedido.setTotalFinal(dto.getTotalPedido() + zona.getCosto());
+
+        return mapToDTO(pedidoRepo.save(pedido));
+    }
+
+    public void eliminar(Long id) {
+        Pedido pedido = pedidoRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado con ID: " + id));
+        pedidoRepo.delete(pedido);
+    }
 }

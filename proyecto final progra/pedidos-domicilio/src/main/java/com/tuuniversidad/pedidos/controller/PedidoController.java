@@ -30,27 +30,34 @@ public class PedidoController {
         return new ResponseEntity<>(service.registrar(dto), HttpStatus.CREATED);
     }
 
-    // Endpoint para el filtro por estado
     @GetMapping("/estado/{estado}")
     public ResponseEntity<List<PedidoResponseDTO>> porEstado(@PathVariable String estado) {
         return ResponseEntity.ok(service.buscarPorEstado(estado.toUpperCase()));
     }
 
-    // Endpoint para el filtro por zona
     @GetMapping("/zona/{zonaId}")
     public ResponseEntity<List<PedidoResponseDTO>> porZona(@PathVariable Long zonaId) {
         return ResponseEntity.ok(service.buscarPorZona(zonaId));
     }
 
-    // Endpoint para entregas pendientes
     @GetMapping("/pendientes")
     public ResponseEntity<List<PedidoResponseDTO>> pendientes() {
         return ResponseEntity.ok(service.entregasPendientes());
     }
 
-    // Endpoint para el total facturado por fecha (formato: YYYY-MM-DD)
     @GetMapping("/facturado/{fecha}")
     public ResponseEntity<Double> facturadoPorFecha(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         return ResponseEntity.ok(service.totalFacturado(fecha));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PedidoResponseDTO> modificar(@PathVariable Long id, @Valid @RequestBody PedidoRequestDTO dto) {
+        return ResponseEntity.ok(service.modificar(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        service.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }

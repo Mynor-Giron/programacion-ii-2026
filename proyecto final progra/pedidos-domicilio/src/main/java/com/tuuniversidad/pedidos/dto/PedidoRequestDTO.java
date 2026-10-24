@@ -15,7 +15,6 @@ public class PedidoRequestDTO {
     @NotNull(message = "El ID de la zona es obligatorio")
     private Long zonaEntregaId;
 
-    // Getters y Setters
     public String getCliente() { return cliente; }
     public void setCliente(String cliente) { this.cliente = cliente; }
     public String getDireccion() { return direccion; }
