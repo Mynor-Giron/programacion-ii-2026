@@ -48,7 +48,6 @@ public class PedidoService {
         pedido.setTotalPedido(dto.getTotalPedido());
         pedido.setZonaEntrega(zona);
 
-        // REGLA DE NEGOCIO: Calcular costo de envío y total final
         pedido.setCostoEnvio(zona.getCosto());
         pedido.setTotalFinal(dto.getTotalPedido() + zona.getCosto());
         pedido.setEstado("RECIBIDO");
