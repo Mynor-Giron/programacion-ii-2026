@@ -1,45 +1,37 @@
-# 📚 Sistema de Gestión - Biblioteca Personal (API REST)
+# semana-13-biblioteca-api
 
-![Java](https://img.shields.io/badge/Java-17%2B-orange?style=flat-square&logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen?style=flat-square&logo=springboot)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-DB-blue?style=flat-square&logo=postgresql)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple?style=flat-square&logo=bootstrap)
+Nombre: Mynor Girón
+Carnet: 9941-25-8300
 
-Plataforma web full-stack desarrollada para administrar el catálogo general de una biblioteca personal. Cuenta con una arquitectura en capas basada en **Spring Boot** para los servicios RESTful y una interfaz dinámica con **JavaScript ES6+** y **Bootstrap 5**.
+## Nombre de la actividad
+Evolución del proyecto final: Implementación de DTO, Validaciones y Manejo de Excepciones.
 
----
+## Descripción del problema
+Se requiere actualizar la API REST de la biblioteca personal para mejorar la organización y confiabilidad del backend. Para ello, se implementó una arquitectura por capas añadiendo la capa Service, se creó un DTO (Data Transfer Object) para recibir datos del cliente de forma segura, se agregaron validaciones a los campos y se implementó un manejo global de excepciones para devolver respuestas HTTP claras y profesionales.
 
-## 👤 Datos de Identificación
+## Tecnologías utilizadas
+* Java 17
+* Spring Boot 3.x
+* Spring Web
+* Spring Data JPA
+* Spring Boot Starter Validation
+* PostgreSQL
+* Maven
 
-* **Desarrollador/a:** Mynor Girón
-* **Carné / Registro:** 9941-25-8300
-
----
-
-## 🛠️ Stack Tecnológico
-
-| Componente | Tecnología Seleccionada |
-| :--- | :--- |
-| **Lenguaje de Programación** | Java 17 / 21 (JDK) |
-| **Backend Framework** | Spring Boot 3.x (Spring Web, Spring Data JPA) |
-| **Motor de Base de Datos** | PostgreSQL & pgAdmin 4 |
-| **Frontend UI** | HTML5, CSS3, Bootstrap 5, JavaScript (Fetch API) |
-| **Gestión de Proyecto** | Apache Maven |
-| **Herramientas de Pruebas** | Postman / cURL |
-| **Entorno de Desarrollo** | IntelliJ IDEA |
-
----
-
-## 🏗️ Estructura del Proyecto
-
-La aplicación aplica el patrón de diseño MVC simplificado, organizando las clases dentro del directorio `src/main/java/com/tuproyecto/`:
-
+## Estructura del proyecto
 ```text
-src/main/java/com/tuproyecto/
+src/main/java/com/biblioteca/semana13bibliotecaapi/
 ├── controller/
-│   └── LibroController.java          # Exposición de endpoints REST (@RestController)
-├── model/
-│   └── Libro.java                    # Mapeo de la entidad JPA (@Entity)
+│   └── LibroController.java
+├── dto/
+│   └── LibroRequestDTO.java
+├── entity/
+│   └── Libro.java
+├── exception/
+│   ├── GlobalExceptionHandler.java
+│   └── RecursoNoEncontradoException.java
 ├── repository/
-│   └── LibroRepository.java          # Capa de persistencia (JpaRepository)
-└── BibliotecaPersonalApplication.java # Clase principal de arranque
+│   └── LibroRepository.java
+├── service/
+│   └── LibroService.java
+└── Semana13BibliotecaApiApplication.java
