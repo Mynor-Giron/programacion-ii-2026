@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PF-14 - Pedidos a Domicilio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>🚚 Sistema de Pedidos a Domicilio</h1>
+</header>
+
+<main>
+    <section class="card">
+        <h2>Registrar Nuevo Pedido</h2>
+        <form id="formPedido">
+            <input type="text" id="cliente" placeholder="Nombre del Cliente" required>
+            <input type="text" id="direccion" placeholder="Dirección de Entrega" required>
+            <input type="number" id="totalPedido" placeholder="Total del Pedido" step="0.01" required>
+
+            <select id="zonaEntregaId" required>
+                <option value="">Seleccione una Zona</option>
+                <option value="1">Zona Norte (Costo: Q15.00)</option>
+                <option value="2">Zona Sur (Costo: Q25.00)</option>
+                <option value="3">Zona Centro (Costo: Q10.00)</option>
+            </select>
+
+            <button type="submit" id="btnGuardar">Registrar Pedido</button>
+        </form>
+        <div id="mensaje" class="mensaje"></div>
+    </section>
+
+    <section class="card">
+        <div class="tabla-header">
+            <h2>Lista de Pedidos</h2>
+            <button onclick="cargarPedidos()" class="btn-recargar">🔄 Actualizar</button>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Zona</th>
+                <th>Total Pedido</th>
+                <th>Costo Envío</th>
+                <th>Total Final</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody id="tablaPedidos"></tbody>
+        </table>
+    </section>
+
+    <section class="card indicador">
+        <h2>📊 Total Facturado (Hoy)</h2>
+        <p id="totalFacturado">Cargando...</p>
+        <button onclick="cargarIndicador()" class="btn-recargar">Calcular Total</button>
+    </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
