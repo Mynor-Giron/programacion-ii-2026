@@ -49,6 +49,7 @@ document.getElementById('formPedido').addEventListener('submit', async (e) => {
             mensajeDiv.innerText = '✅ Pedido registrado exitosamente';
             document.getElementById('formPedido').reset();
             cargarPedidos();
+            cargarIndicador();
         } else {
             mensajeDiv.className = 'mensaje error';
             mensajeDiv.innerText = '❌ Error al registrar. Verifique los datos.';
@@ -65,6 +66,7 @@ async function eliminarPedido(id) {
             if (respuesta.ok) {
                 alert('Pedido eliminado correctamente');
                 cargarPedidos();
+                cargarIndicador();
             }
         } catch (error) {
             console.error("Error al eliminar:", error);
@@ -73,17 +75,42 @@ async function eliminarPedido(id) {
 }
 
 async function cargarIndicador() {
-    const hoy = new Date().toISOString().split('T')[0];
     try {
-        const respuesta = await fetch(`${API_URL}/facturado/${hoy}`);
-        const total = await respuesta.json();
-        document.getElementById('totalFacturado').innerText = `Q${total.toFixed(2)}`;
+        const respuesta = await fetch(API_URL);
+        const pedidos = await respuesta.json();
+
+        let sumaTotal = 0;
+        pedidos.forEach(pedido => {
+            sumaTotal += pedido.totalFinal;
+        });
+
+        document.getElementById('totalFacturado').innerText = `Q${sumaTotal.toFixed(2)}`;
     } catch (error) {
         console.error("Error al calcular indicador:", error);
+        document.getElementById('totalFacturado').innerText = `Q0.00`;
+    }
+}
+
+async function cargarZonas() {
+    try {
+        const respuesta = await fetch('http://localhost:8080/api/zonas');
+        const zonas = await respuesta.json();
+        const select = document.getElementById('zonaEntregaId');
+        select.innerHTML = '<option value="">Seleccione una Zona</option>';
+
+        zonas.forEach(zona => {
+            const option = document.createElement('option');
+            option.value = zona.id;
+            option.text = `${zona.nombre} (Costo: Q${zona.costo.toFixed(2)})`;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar zonas:", error);
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     cargarPedidos();
     cargarIndicador();
+    cargarZonas();
 });

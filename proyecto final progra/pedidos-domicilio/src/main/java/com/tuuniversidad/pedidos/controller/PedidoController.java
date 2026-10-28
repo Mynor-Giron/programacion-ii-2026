@@ -60,4 +60,9 @@ public class PedidoController {
         service.eliminar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<PedidoResponseDTO> cambiarEstado(@PathVariable Long id, @RequestParam String estado) {
+        return ResponseEntity.ok(service.cambiarEstado(id, estado));
+    }
 }

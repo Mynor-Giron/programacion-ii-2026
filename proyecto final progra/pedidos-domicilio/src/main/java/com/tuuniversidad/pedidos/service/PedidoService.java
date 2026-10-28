@@ -96,4 +96,20 @@ public class PedidoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado con ID: " + id));
         pedidoRepo.delete(pedido);
     }
+
+    public PedidoResponseDTO cambiarEstado(Long id, String nuevoEstado) {
+        Pedido pedido = pedidoRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado con ID: " + id));
+
+        java.util.List<String> estadosValidos = java.util.Arrays.asList("RECIBIDO", "EN_RUTA", "ENTREGADO", "CANCELADO");
+        String estadoMayuscula = nuevoEstado.toUpperCase();
+
+        if (!estadosValidos.contains(estadoMayuscula)) {
+            throw new RuntimeException("Estado inválido. Debe ser: RECIBIDO, EN_RUTA, ENTREGADO o CANCELADO");
+        }
+
+        pedido.setEstado(estadoMayuscula);
+        return mapToDTO(pedidoRepo.save(pedido));
+    }
+
 }
