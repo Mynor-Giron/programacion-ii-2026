@@ -1,6 +1,7 @@
 # PF-14 - Sistema de Pedidos de Entrega a Domicilio
 
-**Estudiante:** Mynor Adolfo Girón Muralles**Carné:** 9941-25-8300
+**Estudiante:** Mynor Adolfo Girón Muralles
+**Carné:** 9941-25-8300
 **Curso:** Programación II
 
 ## Descripción del Proyecto
