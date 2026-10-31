@@ -109,10 +109,16 @@ async function cambiarEstado(id, nuevoEstado) {
 }
 
 async function cargarIndicador() {
-    const hoy = new Date().toISOString().split('T')[0];
+    const hoy = new Date();
+    const anio = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    const fechaLocal = `${anio}-${mes}-${dia}`;
+
     try {
-        const respuesta = await fetch(`${API_URL}/facturado/${hoy}`);
+        const respuesta = await fetch(`${API_URL}/facturado/${fechaLocal}`);
         const total = await respuesta.json();
+
         const totalSeguro = total ? total : 0.0;
         document.getElementById('totalFacturado').innerText = `Q${totalSeguro.toFixed(2)}`;
     } catch (error) {
