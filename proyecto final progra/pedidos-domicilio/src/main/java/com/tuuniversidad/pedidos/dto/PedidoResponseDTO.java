@@ -1,5 +1,6 @@
 package com.tuuniversidad.pedidos.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class PedidoResponseDTO {
@@ -7,9 +8,9 @@ public class PedidoResponseDTO {
     private String cliente;
     private String direccion;
     private LocalDateTime fechaPedido;
-    private Double totalPedido;
-    private Double costoEnvio;
-    private Double totalFinal;
+    private BigDecimal totalPedido;
+    private BigDecimal costoEnvio;
+    private BigDecimal totalFinal;
     private String estado;
     private String nombreZona;
 
@@ -21,12 +22,12 @@ public class PedidoResponseDTO {
     public void setDireccion(String direccion) { this.direccion = direccion; }
     public LocalDateTime getFechaPedido() { return fechaPedido; }
     public void setFechaPedido(LocalDateTime fechaPedido) { this.fechaPedido = fechaPedido; }
-    public Double getTotalPedido() { return totalPedido; }
-    public void setTotalPedido(Double totalPedido) { this.totalPedido = totalPedido; }
-    public Double getCostoEnvio() { return costoEnvio; }
-    public void setCostoEnvio(Double costoEnvio) { this.costoEnvio = costoEnvio; }
-    public Double getTotalFinal() { return totalFinal; }
-    public void setTotalFinal(Double totalFinal) { this.totalFinal = totalFinal; }
+    public BigDecimal getTotalPedido() { return totalPedido; }
+    public void setTotalPedido(BigDecimal totalPedido) { this.totalPedido = totalPedido; }
+    public BigDecimal getCostoEnvio() { return costoEnvio; }
+    public void setCostoEnvio(BigDecimal costoEnvio) { this.costoEnvio = costoEnvio; }
+    public BigDecimal getTotalFinal() { return totalFinal; }
+    public void setTotalFinal(BigDecimal totalFinal) { this.totalFinal = totalFinal; }
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
     public String getNombreZona() { return nombreZona; }

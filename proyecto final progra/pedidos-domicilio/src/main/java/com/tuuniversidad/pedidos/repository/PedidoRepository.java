@@ -18,6 +18,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     @Query("SELECT p FROM Pedido p WHERE p.estado = 'RECIBIDO' OR p.estado = 'EN_RUTA'")
     List<Pedido> findEntregasPendientes();
 
-    @Query("SELECT SUM(p.totalFinal) FROM Pedido p WHERE DATE(p.fechaPedido) = :fecha")
-    Double sumarTotalPorFecha(@Param("fecha") LocalDate fecha);
+    @Query("SELECT SUM(p.totalFinal) FROM Pedido p WHERE DATE(p.fechaPedido) = :fecha AND p.estado != 'CANCELADO'")
+    Double sumarTotalPorFecha(@Param("fecha") java.time.LocalDate fecha);
 }

@@ -49,7 +49,7 @@ public class PedidoService {
         pedido.setZonaEntrega(zona);
 
         pedido.setCostoEnvio(zona.getCosto());
-        pedido.setTotalFinal(dto.getTotalPedido() + zona.getCosto());
+        pedido.setTotalFinal(dto.getTotalPedido().add(zona.getCosto()));
         pedido.setEstado("RECIBIDO");
 
         return mapToDTO(pedidoRepo.save(pedido));
@@ -86,7 +86,7 @@ public class PedidoService {
 
 
         pedido.setCostoEnvio(zona.getCosto());
-        pedido.setTotalFinal(dto.getTotalPedido() + zona.getCosto());
+        pedido.setTotalFinal(dto.getTotalPedido().add(zona.getCosto()));
 
         return mapToDTO(pedidoRepo.save(pedido));
     }
@@ -101,14 +101,22 @@ public class PedidoService {
         Pedido pedido = pedidoRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado con ID: " + id));
 
-        java.util.List<String> estadosValidos = java.util.Arrays.asList("RECIBIDO", "EN_RUTA", "ENTREGADO", "CANCELADO");
-        String estadoMayuscula = nuevoEstado.toUpperCase();
+        String estadoActual = pedido.getEstado();
+        String estadoNuevo = nuevoEstado.toUpperCase();
 
-        if (!estadosValidos.contains(estadoMayuscula)) {
-            throw new RuntimeException("Estado inválido. Debe ser: RECIBIDO, EN_RUTA, ENTREGADO o CANCELADO");
+        if (estadoActual.equals("ENTREGADO") || estadoActual.equals("CANCELADO")) {
+            throw new RuntimeException("No se puede modificar un pedido que ya está " + estadoActual);
         }
 
-        pedido.setEstado(estadoMayuscula);
+        if (estadoActual.equals("RECIBIDO") && !estadoNuevo.equals("EN_RUTA") && !estadoNuevo.equals("CANCELADO")) {
+            throw new RuntimeException("Un pedido RECIBIDO solo puede pasar a EN_RUTA o CANCELADO");
+        }
+
+        if (estadoActual.equals("EN_RUTA") && !estadoNuevo.equals("ENTREGADO") && !estadoNuevo.equals("CANCELADO")) {
+            throw new RuntimeException("Un pedido EN_RUTA solo puede pasar a ENTREGADO o CANCELADO");
+        }
+
+        pedido.setEstado(estadoNuevo);
         return mapToDTO(pedidoRepo.save(pedido));
     }
 

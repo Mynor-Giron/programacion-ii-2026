@@ -1,6 +1,7 @@
 package com.tuuniversidad.pedidos.entity;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,9 +14,11 @@ public class Pedido {
     private String cliente;
     private String direccion;
     private LocalDateTime fechaPedido = LocalDateTime.now();
-    private Double totalPedido;
-    private Double costoEnvio;
-    private Double totalFinal;
+
+    private BigDecimal totalPedido;
+    private BigDecimal costoEnvio;
+    private BigDecimal totalFinal;
+
     private String estado = "RECIBIDO";
 
     @ManyToOne
@@ -32,12 +35,12 @@ public class Pedido {
     public void setDireccion(String direccion) { this.direccion = direccion; }
     public LocalDateTime getFechaPedido() { return fechaPedido; }
     public void setFechaPedido(LocalDateTime fechaPedido) { this.fechaPedido = fechaPedido; }
-    public Double getTotalPedido() { return totalPedido; }
-    public void setTotalPedido(Double totalPedido) { this.totalPedido = totalPedido; }
-    public Double getCostoEnvio() { return costoEnvio; }
-    public void setCostoEnvio(Double costoEnvio) { this.costoEnvio = costoEnvio; }
-    public Double getTotalFinal() { return totalFinal; }
-    public void setTotalFinal(Double totalFinal) { this.totalFinal = totalFinal; }
+    public BigDecimal getTotalPedido() { return totalPedido; }
+    public void setTotalPedido(BigDecimal totalPedido) { this.totalPedido = totalPedido; }
+    public BigDecimal getCostoEnvio() { return costoEnvio; }
+    public void setCostoEnvio(BigDecimal costoEnvio) { this.costoEnvio = costoEnvio; }
+    public BigDecimal getTotalFinal() { return totalFinal; }
+    public void setTotalFinal(BigDecimal totalFinal) { this.totalFinal = totalFinal; }
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
     public ZonaEntrega getZonaEntrega() { return zonaEntrega; }
