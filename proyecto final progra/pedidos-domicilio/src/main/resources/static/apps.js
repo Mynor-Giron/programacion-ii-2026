@@ -65,8 +65,20 @@ document.getElementById('formPedido').addEventListener('submit', async (e) => {
             cargarPedidos();
             cargarIndicador();
         } else {
+
+            const errorData = await respuesta.json().catch(() => ({}));
             mensajeDiv.className = 'mensaje error';
-            mensajeDiv.innerText = '❌ Error al registrar. Verifique los datos.';
+
+            if (typeof errorData === 'object' && !errorData.error) {
+
+                let mensajes = Object.values(errorData).join(" | ");
+                mensajeDiv.innerText = '❌ ' + mensajes;
+            } else if (errorData.error) {
+                // Si es un error de excepción del sistema
+                mensajeDiv.innerText = '❌ ' + errorData.error;
+            } else {
+                mensajeDiv.innerText = '❌ Error al registrar. Verifique los datos.';
+            }
         }
     } catch (error) {
         console.error("Error al registrar:", error);

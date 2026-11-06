@@ -6,7 +6,7 @@ import com.tuuniversidad.pedidos.entity.Pedido;
 import com.tuuniversidad.pedidos.entity.ZonaEntrega;
 import com.tuuniversidad.pedidos.exception.ResourceNotFoundException;
 import com.tuuniversidad.pedidos.repository.PedidoRepository;
-import com.tuuniversidad.pedidos.repository.zonaEntregaRepository;
+import com.tuuniversidad.pedidos.repository.ZonaEntregaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class PedidoService {
 
     @Autowired private PedidoRepository pedidoRepo;
-    @Autowired private zonaEntregaRepository zonaRepo;
+    @Autowired private ZonaEntregaRepository zonaRepo;
 
     private PedidoResponseDTO mapToDTO(Pedido p) {
         PedidoResponseDTO dto = new PedidoResponseDTO();
